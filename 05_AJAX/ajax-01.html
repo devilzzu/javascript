@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<title>AJAX JSON</title>
+	<script>
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function a() {
+			// console.log(this.readyState, this.status);
+			if(this.readyState == 4 && this.status == 200) {
+				// console.log(this.response);
+				var data = JSON.parse(this.response);
+				for(var i in data) {
+					var t = document.getElementById("template").cloneNode(true);
+					t.removeAttribute("id");
+					t.children[0].innerText = data[i].id;
+					t.children[1].innerText = data[i].msg;
+					document.body.appendChild(t);
+				}
+			}
+		}
+		xhr.open('GET', './data.json');
+		xhr.send();
+	</script>
+</head>
+<body>
+	<p id="template">
+		<span class="character">디즈니 애니메이션</span> :
+		<span class="word">명대사</span>
+	</p>
+</body>
+</html>
