@@ -19,7 +19,10 @@
 	// var today = yy + "" + "" + mm + "" + dd;
 	var today = `${yy}${mm}${dd}`;
 	console.log(today);
-	xhr.open('GET', "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=d878630a10fce1fad53e9b0cdaeb8a18&targetDt="+ today);
+	xhr.open('GET', './data/movie.json');
+	// api : github gh-pages에서는 불러와지지 않는다. 
+	// xhr.open('GET', "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=d878630a10fce1fad53e9b0cdaeb8a18&targetDt=20161229");
+	// xhr.open('GET', "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=d878630a10fce1fad53e9b0cdaeb8a18&targetDt="+ today);
 	xhr.send();
 
 	xhr.onreadystatechange = function() {
