@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<title>비동기통신을 위한 AJAX공부</title>
+	<style>
+		body { margin: 6rem; }
+		.call-ajax-data-btn {
+			cursor: pointer;
+			padding: 0.75rem 1rem;
+			border-radius: 0.25rem;
+			border: none;
+			background: #d2d2d2;
+			color: #1d1d1d;
+			font-size: 0.875rem;
+			font-weight: 200;
+		}
+		.call-ajax-data-btn:hover{
+			color: #fff;
+			background: #868686;
+		}
+		.call-ajax-data-btn:active{
+			position: relative;
+			top: 2px;
+		}
+		.ajax-result {
+			margin-top: 3rem;
+			border: 3px solid currentColor;
+			padding: 1rem;
+			color: #704bdb;
+		}
+	</style>
+</head>
+<body>
+
+	<button type="button" class="call-ajax-data-btn">View Update</button>
+
+	<div class="ajax-result">
+		Stand Ready..
+	</div>
+
+<script src="js/ajax-communication-xml.js"></script>
+</body>
+</html>
