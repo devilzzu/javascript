@@ -36,7 +36,7 @@
 			console.log('통신 데이터 전송 실패');
 		}
 		result_view.innerHTML = template;
-		console.log('okok')
+
 	}
 
 	xhr.send();
