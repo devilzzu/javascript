@@ -16,8 +16,8 @@
 	var yy = d.getFullYear();
 	var mm = d.getMonth() + 1;
 	var dd = d.getDate() - 1;
-	// var today = yy + "" + "" + mm + "" + dd;
-	var today = `${yy}${mm}${dd}`;
+	var today = yy + "" + "" + mm + "" + dd;
+	// var today = `${yy}${mm}${dd}`;
 	console.log(today);
 	xhr.open('GET', './data/movie.json');
 	// api : github gh-pages에서는 불러와지지 않는다. 
@@ -36,18 +36,30 @@
 			getmovies = JSON.parse(getmovies); 
 			// json파일내에 있는 속성 results
 			var movies = getmovies.boxOfficeResult.dailyBoxOfficeList; 
-			// movies 반복 순환 처리
-			for(var movie of movies) {
+			// IE에서 for of문 안되어 코드 리펙토링
+			for(var i=0; i<movies.length; i++) {
 				template += [
 					'<li class="movie-contents">',
-						'<strong class="rank">'+'No.'+movie.rank+'</strong>',
-						'<h3 class="name">'+movie.movieNm+'</h3>',
-						'<p class="opendt small">'+'개봉일 : '+'<span>'+movie.openDt+'</span>'+'</p>',
-						'<p class="audiacc small">'+'누적 관객 수 : '+'<span>'+movie.audiAcc+'</span>'+'명'+'</p>',
-						'<p class="rankinten small">'+'순위 변화 : '+'<span class="rank-change">'+movie.rankInten+'</span>'+'</p>',
+						'<strong class="rank">'+'No.'+movies[i].rank+'</strong>',
+						'<h3 class="name">'+movies[i].movieNm+'</h3>',
+						'<p class="opendt small">'+'개봉일 : '+'<span>'+movies[i].openDt+'</span>'+'</p>',
+						'<p class="audiacc small">'+'누적 관객 수 : '+'<span>'+movies[i].audiAcc+'</span>'+'명'+'</p>',
+						'<p class="rankinten small">'+'순위 변화 : '+'<span class="rank-change">'+movies[i].rankInten+'</span>'+'</p>',
 					'</li>'
 				].join('');
 			}
+			// movies 반복 순환 처리
+			// for(var movie of movies) {
+			// 	template += [
+			// 		'<li class="movie-contents">',
+			// 			'<strong class="rank">'+'No.'+movie.rank+'</strong>',
+			// 			'<h3 class="name">'+movie.movieNm+'</h3>',
+			// 			'<p class="opendt small">'+'개봉일 : '+'<span>'+movie.openDt+'</span>'+'</p>',
+			// 			'<p class="audiacc small">'+'누적 관객 수 : '+'<span>'+movie.audiAcc+'</span>'+'명'+'</p>',
+			// 			'<p class="rankinten small">'+'순위 변화 : '+'<span class="rank-change">'+movie.rankInten+'</span>'+'</p>',
+			// 		'</li>'
+			// 	].join('');
+			// }
 		} else {
 			console.log('통신 데이터 전송 실패');
 		}
