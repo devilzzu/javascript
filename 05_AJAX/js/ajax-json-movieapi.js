@@ -53,7 +53,7 @@
 		}
 		result_view.innerHTML = template;
 
-		// 랭킹 3위부터 회색배경 
+		// 랭킹 4위부터 회색배경 
 		var rank_array = document.querySelectorAll('.rank');
 		var gray_array = Array.prototype.slice.apply(rank_array);
 		var gray_rank = gray_array.slice(3);
