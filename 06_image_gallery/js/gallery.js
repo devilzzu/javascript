@@ -5,7 +5,6 @@
 	var result_view = document.querySelector('.ajax-result');
 
 	xhr.open("GET", "./data/gallery.json");
-	xhr.send();
 
 	xhr.onreadystatechange = function() {
 		if(this.status === 200 && this.readyState === 4) {
@@ -17,7 +16,9 @@
 			for(var photo of photos){
 				template += [
 					'<li>',
-						'<img src="'+photo.image+'" alt="">',
+						'<a href="#" class="photo-link">',
+							'<img class="photo-img" src="'+photo.image+'" alt="'+photo.alt+'">',
+						'</a>',
 					'</li>'
 				].join('');
 			}
@@ -27,4 +28,6 @@
 		result_view.innerHTML = template;
 	}
 
+	xhr.send();
 })(this, this.XMLHttpRequest || this.ActiveXObject('Microsoft.XMLHTTP'));
+

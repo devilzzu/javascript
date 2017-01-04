@@ -5,10 +5,19 @@
 	<meta charset="UTF-8">
 	<title>이미지 갤러리</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../libs/normalize.css">
+	<link rel="stylesheet" href="../libs/common.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<ul class="ajax-result"></ul>
+	<header class="page-header base-padding clearfix">
+		<h1 class="page-title">Photo Gallery</h1>
+		<button class="slide-btn">슬라이드 쇼</button>
+	</header>
+	<article class="photo-gallery base-padding">
+		<h2 class="blind">포토 갤러리</h2>
+		<ul class="ajax-result clearfix"></ul>
+	</article>
 <script src="js/gallery.js"></script>
 </body>
 </html>
