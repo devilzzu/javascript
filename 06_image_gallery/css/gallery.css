@@ -8,6 +8,7 @@
 body{
 	width: 100%;
 	background: #fff;
+	color: #333;
 	font-family: 'Noto Sans', 'Sans-serif';
 }
 .page-header{
@@ -17,20 +18,24 @@ body{
 	height: 4.38rem;
 	line-height: 4.38rem;
 	padding-left: 1rem;
-	background: rgba(200,200,200,0.8);
+	background: rgba(220,220,220,0.95);
 }
 .page-title{
 	float: left;
 	font-size: 1.75rem;
-	font-weight: bold;
+	font-weight: normal;
 	color: #00B7C3;
-	text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+	/*text-shadow: 1px 1px 2px rgba(255,255,255,0.3);*/
 	transition: .3s all ease-in-out;
 }
 .slide-btn{
 	float: right;
 	padding: 0 15px;
+	font-size: 1rem;
 	transition: .3s all ease-in-out;
+}
+.slide-btn .fa{
+	margin-right: 0.44rem;
 }
 .slide-btn:hover,
 .slide-btn:focus{
@@ -38,6 +43,7 @@ body{
 }
 .photo-gallery{
 	padding-top: 4.7rem;
+	/*min-height: 650px;*/
 }
 .ajax-result{
 	text-align: center;
@@ -104,7 +110,7 @@ body{
 	font-size: 0.75rem;
 }
 .page-footer a:hover{
-	text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
 }
 
 /*common*/
