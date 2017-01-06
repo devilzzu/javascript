@@ -106,7 +106,7 @@ body{
 		position: absolute;
 		z-index: 90;
 		top: 190px;
-		left: 25%;
+		left: 35%;
 		transform: scale(2.5);
 	}
 	.photo-link.off{

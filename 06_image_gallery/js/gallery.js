@@ -41,13 +41,13 @@
 		}
 		result_view.innerHTML = template;
 
-		var divBlock = document.createElement("div");
-		divBlock.setAttribute("class", "black-block");
+		// var divBlock = document.createElement("div");
+		// divBlock.setAttribute("class", "black-block");
 		var photoLink = document.querySelectorAll('.photo-link');
 		var photoImg = document.querySelectorAll('.photo-img');
-		var headerHeight = document.querySelector('.page-header').offsetHeight + 10;
-		var windowWidth = window.innerWidth;
-		var windowHeight = window.innerHeight;
+		// var headerHeight = document.querySelector('.page-header').offsetHeight + 10;
+		// var windowWidth = window.innerWidth;
+		// var windowHeight = window.innerHeight;
 		// 유사배열을 배열로 쓸 수 있게 하기 
 		photoLink = Array.prototype.slice.apply(photoLink);
 
