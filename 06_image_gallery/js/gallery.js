@@ -41,29 +41,26 @@
 		}
 		result_view.innerHTML = template;
 
+		var divBlock = document.createElement("div");
+		divBlock.setAttribute("class", "black-block");
 		var photoLink = document.querySelectorAll('.photo-link');
 		var photoImg = document.querySelectorAll('.photo-img');
 		var headerHeight = document.querySelector('.page-header').offsetHeight + 10;
 		var windowWidth = window.innerWidth;
 		var windowHeight = window.innerHeight;
-		var chk = true;
-		for(var i=0; i<photoLink.length; i++){
-			var photoLinkWidth = photoLink[i].offsetWidth;
-			console.log(photoLinkWidth);
-			photoLink[i].onclick = function() {
-				
-				if(chk){
-					// this.style.transform = 'scale(2)';
-					this.classList.add("on");
-					// this.firstElementChild.style.height = (windowHeight-headerHeight)+'px';
-					chk = false;
-				}else{
-					// this.style.transform = 'scale(1)';
-					this.classList.remove("on");
-					// this.style.width = photoLinkWidth+'px';
-					chk = true;
-				}
+		// 유사배열을 배열로 쓸 수 있게 하기 
+		photoLink = Array.prototype.slice.apply(photoLink);
 
+		for(var i=0; i<photoLink.length; i++){
+			photoLink[i].onclick = function() {
+				var idx = photoLink.indexOf(this);
+				// var newLink = photoLink.splice(idx, 1);
+				for(var j=0; j<photoLink.length; j++){
+					if( j !== idx ) {
+						photoLink[j].classList.toggle("off");
+					}
+				}
+				this.classList.toggle("on");
 			}
 		}
 		
