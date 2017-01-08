@@ -36,25 +36,38 @@
 		var slideBtnIcon = document.querySelector(".slide-btn .fa");
 		// 슬라이드 버튼이 눌렸는지 확인하기 
 		var chkBtn = false;
+		// 사진 확대 눌렀는지 확인하기 
+		var photoClick = false;
 		var index = 0;
-
+		// 브라우저 height
+		var windowHeight = window.innerHeight;
 		// 검정배경 Div요소 만들기 
 		var photoGallery = document.querySelector('.photo-gallery').firstElementChild;
 		var menuCoverDiv = document.createElement('div');
 		menuCoverDiv.setAttribute('class', 'menu-cover');
-		photoGallery.parentNode.insertBefore(menuCoverDiv, photoGallery);
+		// menuCoverDiv.style.height = photoGallery.parentNode.offsetHeight;
+		// photoGallery.parentNode.insertBefore(menuCoverDiv, photoGallery);
 		// 검정 배경 나오게 하기 
-		// function menuCover() {
-		// 	// 목표노드.부모노드.insertBefore(insert삽입할노드, target목표노드)
-		// 	photoGallery.parentNode.insertBefore(menuCoverDiv, photoGallery);
-		// }
-		// // 검정 배경 없애기 
-		// function removeMenuCover() {
-		// 	photoGallery.parentNode.removeChild(menuCoverDiv);
-		// }
+		function menuCover(el) {
+			// 목표노드.부모노드.insertBefore(insert삽입할노드, target목표노드)
+			photoGallery.parentNode.insertBefore(menuCoverDiv, photoGallery);
+			// 확대된 사진의 height
+			var photoHeight = el.offsetHeight;
+			// 사진크기와 브라우저크기를 비교하여 검정 배경 height 정하기
+			if(windowHeight > photoHeight){
+				menuCoverDiv.style.height = windowHeight+'px';
+			}else{
+				menuCoverDiv.style.height = (photoHeight+90)+'px';
+			}
+		}
+		// 검정 배경 없애기 
+		function removeMenuCover() {
+			photoGallery.parentNode.removeChild(menuCoverDiv);
+		}
 		// 각 사진 클릭시 photoShow 함수 실행 
 		function photoAddEvent() {
 			for(var i=0; i<photoLink.length; i++){
+				photoLink[i].style.cursor = "pointer";
 				photoLink[i].addEventListener("click", photoShow, false);
 			}
 		}
@@ -62,6 +75,7 @@
 		// removeEvent
 		function photoRemoveEvent() {
 			for(var i=0; i<photoLink.length; i++){
+				photoLink[i].style.cursor = "default";
 				photoLink[i].removeEventListener("click", photoShow, false);
 			}
 		}
@@ -74,25 +88,44 @@
 				}
 			}
 			this.classList.toggle("on");
-			menuCoverDiv.classList.toggle("on");
+			if(!photoClick){
+				menuCover(this);
+				photoClick = !photoClick;
+			}else{
+				removeMenuCover();
+				photoClick = !photoClick;
+			}
+			
 		}
 		// 슬라이드 쇼 함수
 		function slideShow() {
-			menuCoverDiv.classList.add("on");
+			menuCover(photoLink[index]);
 			photoLink[index].classList.add("on");
+
+			for(var j=0; j<photoLink.length; j++){
+				if( j !== index ) {
+					photoLink[j].classList.add("off");
+				}
+			}
 			global.slideInterval = setInterval(function(){
 				index++;
 				if(index < photoLink.length){
 					photoLink[index-1].classList.remove("on");
+					photoLink[index-1].classList.add("off");
+					photoLink[index].classList.remove("off");
 					photoLink[index].classList.add("on");
+					
 					console.log(index);
 				}else {
 					photoLink[index-1].classList.remove("on");
 					clearInterval(slideInterval);
 					photoAddEvent();
-					menuCoverDiv.classList.remove("on");
+					removeMenuCover();
 					slideBtn.classList.remove("pause-interval");
 					slideBtn.classList.remove("on");
+					for(var j=0; j<photoLink.length; j++){
+						photoLink[j].classList.remove("off");
+					}
 					index = 0;
 					chkBtn = !chkBtn;
 				}
@@ -106,7 +139,6 @@
 				photoRemoveEvent();
 				slideBtn.classList.remove("pause-interval");
 				slideBtn.classList.add("on");
-				menuCoverDiv.classList.add("on");
 				chkBtn = !chkBtn;
 			}else{
 				clearInterval(global.slideInterval);
