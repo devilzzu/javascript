@@ -35,9 +35,21 @@ body{
 	transition: .3s all ease-in-out;
 	cursor: pointer;
 }
+.slide-btn::before{
+	display: inline-block;
+	font-family: 'FontAwesome';
+	content: "\f144";
+	margin-right: 7px;
+}
 .slide-btn.on{
 	color: #00B7C3;
 	background: #ccc;
+}
+.slide-btn.on::before{
+	display: inline-block;
+	font-family: 'FontAwesome';
+	content: "\f28e";
+	margin-right: 7px;
 }
 .slide-btn.pause-interval{
 	color: #aaa;
