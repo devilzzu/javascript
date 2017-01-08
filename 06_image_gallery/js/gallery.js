@@ -45,7 +45,6 @@
 			photoLink[i].onclick = function() {
 				// 클릭한 요소가 몇번째 index에 있는가
 				var idx = photoLink.indexOf(this);
-				// var newLink = photoLink.splice(idx, 1);
 				for(var j=0; j<photoLink.length; j++){
 					if( j !== idx ) {
 						photoLink[j].classList.toggle("off");
@@ -54,24 +53,28 @@
 				this.classList.toggle("on");
 			}
 		}
+
+		var slideBtn = document.querySelector(".slide-btn");
+		slideBtn.onclick = function(){
+			this.setAttribute('disabled', true);
+			this.style.cursor = "wait";
+			var index = 0;
+			photoLink[index].classList.add("on");
+			var intervalId = setInterval( function(){
+				index++;
+				photoLink[index-1].classList.remove("on");
+				if(index < photoLink.length){
+					
+					photoLink[index].classList.add("on");
+					console.log(index);
+				}
+				else{ 
+					clearInterval(intervalId); 
+					slideBtn.removeAttribute('disabled');
+					slideBtn.style.cursor = "pointer";
+				}
+			}, 2000);
+		}
 	}
 
-	
-
 })(this, this.XMLHttpRequest || this.ActiveXObject('Microsoft.XMLHTTP'));
-
-function slideShow(btn){
-	// var slideBtn = document.querySelector(".slide-btn");
-	var photoLink = document.querySelectorAll('.photo-link');
-	var index = 0;
-	photoLink[index].classList.add("on");
-	var intervalId = setInterval( function(){
-		index++;
-		if(index <= photoLink.length){
-			photoLink[index-1].classList.remove("on");
-			photoLink[index].classList.add("on");
-			console.log(index);
-		}
-		else{ clearInterval(intervalId); }
-	}, 2000);
-}

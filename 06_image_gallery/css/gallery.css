@@ -109,7 +109,6 @@ body{
 @media (min-width: 801px) {
 	.photo-link{
 		height: 250px;
-		/*transform: scale(1);*/
 	}
 	.photo-img{
 		height: 100%;
@@ -119,7 +118,6 @@ body{
 		z-index: 90;
 		top: 0;
 		left: 5%;
-		/*transform: scale(2.5);*/
 		width: 90%;
 		height: inherit;
 		animation: ani-opacity 1s;
@@ -134,8 +132,12 @@ body{
 }
 
 @keyframes ani-opacity {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
+	0% { 
+		opacity: 0; 
+	}
+	100% { 
+		opacity: 1; 
+	}
 }
 
 /*footer*/
