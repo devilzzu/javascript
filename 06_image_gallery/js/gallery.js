@@ -14,19 +14,6 @@
 			var template = '';
 			var photos = data.results;
 			for(var i=0; i<photos.length; i++){
-				/* 다른방법 
-				var li = document.createElement("li");
-				var a = document.createElement("a");
-				var img = document.createElement("img");
-				a.setAttribute("class", "photo-link");
-				a.setAttribute("href", "javascript:;");
-				img.setAttribute("class", "photo-img");
-				img.setAttribute("src", photos[i].image);
-				li.appendChild(a);
-				a.appendChild(img);
-				console.log(li)
-				result_view.appendChild(li); 
-				*/
 				template += [
 					'<li>',
 						'<a href="javascript:;" class="photo-link">',
@@ -43,6 +30,9 @@
 
 		// var divBlock = document.createElement("div");
 		// divBlock.setAttribute("class", "black-block");
+
+		// class="photo-link"인 요소들을 모두 선택합니다.
+		// 이 때 변수 photoLink에 요소들이 유사배열로 저장됩니다.
 		var photoLink = document.querySelectorAll('.photo-link');
 		var photoImg = document.querySelectorAll('.photo-img');
 		// var headerHeight = document.querySelector('.page-header').offsetHeight + 10;
@@ -53,8 +43,8 @@
 
 		for(var i=0; i<photoLink.length; i++){
 			photoLink[i].onclick = function() {
+				// 클릭한 요소가 몇번째 index에 있는가
 				var idx = photoLink.indexOf(this);
-				// var newLink = photoLink.splice(idx, 1);
 				for(var j=0; j<photoLink.length; j++){
 					if( j !== idx ) {
 						photoLink[j].classList.toggle("off");
@@ -63,10 +53,46 @@
 				this.classList.toggle("on");
 			}
 		}
+
+		var slideBtn = document.querySelector(".slide-btn");
+		var chkBtn = false;
+		var index = 0;
+		function slideShow() {
+			photoLink[index].classList.add("on");
+			global.slideInterval = setInterval(function(){
+				index++;
+				if(index < photoLink.length){
+					photoLink[index-1].classList.remove("on");
+					photoLink[index].classList.add("on");
+					console.log(index);
+				}else {
+					photoLink[index-1].classList.remove("on");
+					clearInterval(slideInterval);
+					slideBtn.classList.remove("pause-interval");
+					slideBtn.classList.remove("on");
+					index = 0;
+					chkBtn = false;
+				}
+				
+			}, 2000);
+		}
+		// 슬라이드 버튼 클릭시 
+		slideBtn.onclick = function(){
+			if(!chkBtn){
+				slideShow();
+				slideBtn.classList.remove("pause-interval");
+				slideBtn.classList.add("on");
+				chkBtn = true;
+			}else{
+				clearInterval(global.slideInterval);
+				slideBtn.classList.remove("on");
+				slideBtn.classList.add("pause-interval");
+				console.log('plz stop');
+				chkBtn = false;
+			}
+			
+		}
 		
 	}
 
-	
-
 })(this, this.XMLHttpRequest || this.ActiveXObject('Microsoft.XMLHTTP'));
-
