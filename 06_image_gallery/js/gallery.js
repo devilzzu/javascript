@@ -28,16 +28,9 @@
 		}
 		result_view.innerHTML = template;
 
-		// var divBlock = document.createElement("div");
-		// divBlock.setAttribute("class", "black-block");
-
-		// class="photo-link"인 요소들을 모두 선택합니다.
-		// 이 때 변수 photoLink에 요소들이 유사배열로 저장됩니다.
 		var photoLink = document.querySelectorAll('.photo-link');
 		var photoImg = document.querySelectorAll('.photo-img');
-		// var headerHeight = document.querySelector('.page-header').offsetHeight + 10;
-		// var windowWidth = window.innerWidth;
-		// var windowHeight = window.innerHeight;
+
 		// 유사배열을 배열로 쓸 수 있게 하기 
 		photoLink = Array.prototype.slice.apply(photoLink);
 
@@ -55,6 +48,7 @@
 		}
 
 		var slideBtn = document.querySelector(".slide-btn");
+		var slideBtnIcon = document.querySelector(".slide-btn .fa");
 		var chkBtn = false;
 		var index = 0;
 		function slideShow() {
@@ -87,7 +81,6 @@
 				clearInterval(global.slideInterval);
 				slideBtn.classList.remove("on");
 				slideBtn.classList.add("pause-interval");
-				console.log('plz stop');
 				chkBtn = false;
 			}
 			
