@@ -55,26 +55,44 @@
 		}
 
 		var slideBtn = document.querySelector(".slide-btn");
-		slideBtn.onclick = function(){
-			this.setAttribute('disabled', true);
-			this.style.cursor = "wait";
-			var index = 0;
+		var chkBtn = false;
+		var index = 0;
+		function slideShow() {
 			photoLink[index].classList.add("on");
-			var intervalId = setInterval( function(){
+			global.slideInterval = setInterval(function(){
 				index++;
-				photoLink[index-1].classList.remove("on");
 				if(index < photoLink.length){
-					
+					photoLink[index-1].classList.remove("on");
 					photoLink[index].classList.add("on");
 					console.log(index);
+				}else {
+					photoLink[index-1].classList.remove("on");
+					clearInterval(slideInterval);
+					slideBtn.classList.remove("pause-interval");
+					slideBtn.classList.remove("on");
+					index = 0;
+					chkBtn = false;
 				}
-				else{ 
-					clearInterval(intervalId); 
-					slideBtn.removeAttribute('disabled');
-					slideBtn.style.cursor = "pointer";
-				}
+				
 			}, 2000);
 		}
+		// 슬라이드 버튼 클릭시 
+		slideBtn.onclick = function(){
+			if(!chkBtn){
+				slideShow();
+				slideBtn.classList.remove("pause-interval");
+				slideBtn.classList.add("on");
+				chkBtn = true;
+			}else{
+				clearInterval(global.slideInterval);
+				slideBtn.classList.remove("on");
+				slideBtn.classList.add("pause-interval");
+				console.log('plz stop');
+				chkBtn = false;
+			}
+			
+		}
+		
 	}
 
 })(this, this.XMLHttpRequest || this.ActiveXObject('Microsoft.XMLHTTP'));

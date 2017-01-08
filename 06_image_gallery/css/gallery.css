@@ -31,7 +31,17 @@ body{
 	float: right;
 	padding: 0 15px;
 	font-size: 1rem;
+	color: #333;
 	transition: .3s all ease-in-out;
+	cursor: pointer;
+}
+.slide-btn.on{
+	color: #00B7C3;
+	background: #ccc;
+}
+.slide-btn.pause-interval{
+	color: #aaa;
+	background: #ccc;
 }
 .slide-btn .fa{
 	margin-right: 0.44rem;
@@ -162,7 +172,6 @@ button{
 	display: inline-block;
 	background: transparent;
 	border: none;
-	cursor: pointer;
 }
 .base-padding{
 	padding-left: 2rem;
