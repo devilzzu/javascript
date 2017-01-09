@@ -67,7 +67,7 @@
 		// 각 사진 클릭시 photoShow 함수 실행 
 		function photoAddEvent() {
 			for(var i=0; i<photoLink.length; i++){
-				photoLink[i].style.cursor = "pointer";
+				// photoLink[i].style.cursor = "pointer";
 				photoLink[i].addEventListener("click", photoShow, false);
 			}
 		}
@@ -81,6 +81,7 @@
 		}
 		// 사진 클릭시 커지는 함수 
 		function photoShow() {
+			console.log("photoShow함수실행");
 			var idx = photoLink.indexOf(this);
 			for(var j=0; j<photoLink.length; j++){
 				if( j !== idx ) {
@@ -100,16 +101,37 @@
 			}
 			
 		}
+		// 슬라이드 쇼를 멈추고 사진들이 원래대로 돌아오게 하는 함수 
+		function stopSlideShow(e){
+			console.log("stopSlideShow함수실행");
+			if(chkBtn){
+				photoLink[index].classList.remove("on");
+			}else{
+				photoLink[index-1].classList.remove("on");
+			}
+			clearInterval(slideInterval);
+			photoAddEvent();
+			removeMenuCover();
+			slideBtn.classList.remove("pause-interval");
+			slideBtn.classList.remove("on");
+			for(var j=0; j<photoLink.length; j++){
+				photoLink[j].classList.remove("off");
+			}
+			index = 0;
+			chkBtn = !chkBtn;
+		}
 		// 슬라이드 쇼 함수
 		function slideShow() {
-			
-			photoLink[index].classList.add("on");
-			menuCover(photoLink[index]);
 			for(var j=0; j<photoLink.length; j++){
+				// 슬라이드 쇼 함수 진행 중 확대된 사진을 클릭하면 슬라이드 쇼 멈추기 
+				photoLink[j].addEventListener("click", stopSlideShow, false);
 				if( j !== index ) {
 					photoLink[j].classList.add("off");
 				}
 			}
+			photoLink[index].classList.add("on");
+			menuCover(photoLink[index]);
+			
 			global.slideInterval = setInterval(function(){
 				index++;
 				if(index < photoLink.length){
@@ -120,17 +142,8 @@
 					menuCover(photoLink[index]);
 					console.log(index);
 				}else {
-					photoLink[index-1].classList.remove("on");
-					clearInterval(slideInterval);
-					photoAddEvent();
-					removeMenuCover();
-					slideBtn.classList.remove("pause-interval");
-					slideBtn.classList.remove("on");
-					for(var j=0; j<photoLink.length; j++){
-						photoLink[j].classList.remove("off");
-					}
-					index = 0;
-					chkBtn = !chkBtn;
+					chkBtn = false;
+					stopSlideShow();
 				}
 				
 			}, 2000);
