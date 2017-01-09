@@ -54,10 +54,10 @@
 			// 확대된 사진의 height
 			var photoHeight = el.offsetHeight;
 			// 사진크기와 브라우저크기를 비교하여 검정 배경 height 정하기
-			if(windowHeight > photoHeight){
-				menuCoverDiv.style.height = windowHeight+'px';
+			if((windowHeight-90) > photoHeight){
+				menuCoverDiv.style.height = (windowHeight-10)+'px';
 			}else{
-				menuCoverDiv.style.height = (photoHeight+90)+'px';
+				menuCoverDiv.style.height = (photoHeight+30)+'px';
 			}
 		}
 		// 검정 배경 없애기 
@@ -75,7 +75,7 @@
 		// removeEvent
 		function photoRemoveEvent() {
 			for(var i=0; i<photoLink.length; i++){
-				photoLink[i].style.cursor = "default";
+				// photoLink[i].style.cursor = "default";
 				photoLink[i].removeEventListener("click", photoShow, false);
 			}
 		}
@@ -90,6 +90,9 @@
 			this.classList.toggle("on");
 			if(!photoClick){
 				menuCover(this);
+				// if(this.offsetHeight > windowHeight){
+				// 	this.firstElementChild.style.width = '65%';
+				// }
 				photoClick = !photoClick;
 			}else{
 				removeMenuCover();
@@ -99,9 +102,9 @@
 		}
 		// 슬라이드 쇼 함수
 		function slideShow() {
-			menuCover(photoLink[index]);
+			
 			photoLink[index].classList.add("on");
-
+			menuCover(photoLink[index]);
 			for(var j=0; j<photoLink.length; j++){
 				if( j !== index ) {
 					photoLink[j].classList.add("off");
@@ -114,7 +117,7 @@
 					photoLink[index-1].classList.add("off");
 					photoLink[index].classList.remove("off");
 					photoLink[index].classList.add("on");
-					
+					menuCover(photoLink[index]);
 					console.log(index);
 				}else {
 					photoLink[index-1].classList.remove("on");
@@ -139,6 +142,7 @@
 				photoRemoveEvent();
 				slideBtn.classList.remove("pause-interval");
 				slideBtn.classList.add("on");
+
 				chkBtn = !chkBtn;
 			}else{
 				clearInterval(global.slideInterval);
