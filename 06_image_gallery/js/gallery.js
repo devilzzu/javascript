@@ -115,6 +115,7 @@
 			slideBtn.classList.remove("pause-interval");
 			slideBtn.classList.remove("on");
 			for(var j=0; j<photoLink.length; j++){
+				photoLink[j].removeEventListener("click", stopSlideShow, false);
 				photoLink[j].classList.remove("off");
 			}
 			index = 0;
