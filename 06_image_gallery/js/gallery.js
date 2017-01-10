@@ -37,7 +37,7 @@
 		// 슬라이드 버튼이 눌렸는지 확인하기 
 		var chkBtn = false;
 		// 슬라이드 멈춤 버튼 클릭 여부 
-		var slideBtnOn = false;
+		var PauseBtnOn = false;
 		// 사진 확대 눌렀는지 확인하기 
 		var photoClick = false;
 		// 사진이 담겨있는 배열의 인덱스 
@@ -112,11 +112,12 @@
 		function stopSlideShow(e){
 			console.log("stopSlideShow함수실행");
 			// 슬라이드 버튼이 눌러졌다면 
-			if(chkBtn){
+			if(chkBtn || PauseBtnOn){
 				photoLink[index].classList.remove("on");
 			}else{
 				photoLink[index-1].classList.remove("on");
 			}
+			index = 0;
 			clearInterval(slideInterval);
 			photoAddEvent();
 			removeMenuCover();
@@ -125,9 +126,8 @@
 			for(var j=0; j<photoLink.length; j++){
 				photoLink[j].classList.remove("off");
 			}
-			index = 0;
 			chkBtn = false;
-			slideBtnOn = false;
+			PauseBtnOn = false;
 			photoClick = false;
 			removeStopSlideShow();
 		}
@@ -160,7 +160,7 @@
 					console.log(index);
 				}else { // 슬라이드 쇼 끝난 후 
 					chkBtn = false;
-					slideBtnOn = false;
+					PauseBtnOn = false;
 					photoClick = false;
 					stopSlideShow();
 				}
@@ -168,20 +168,19 @@
 		}
 		// 슬라이드 버튼 클릭시 
 		slideBtn.onclick = function(){
-			// 슬라이드 플레이 
-			if(!chkBtn && !slideBtnOn){
+			// 슬라이드 재생 
+			if(!chkBtn){
 				slideShow();
 				photoRemoveEvent();
 				slideBtn.classList.remove("pause-interval");
 				slideBtn.classList.add("on");
 				chkBtn = true;
-				slideBtnOn = true;
 			}else{ // 슬라이드 멈춤 
 				clearInterval(global.slideInterval);
 				slideBtn.classList.remove("on");
 				slideBtn.classList.add("pause-interval");
-				chkBtn = true;
-				slideBtnOn = false;
+				chkBtn = false;
+				PauseBtnOn = true;
 				// photoClick = false;
 			}
 			
