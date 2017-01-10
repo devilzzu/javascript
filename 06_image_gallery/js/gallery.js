@@ -38,6 +38,7 @@
 		var chkBtn = false;
 		// 사진 확대 눌렀는지 확인하기 
 		var photoClick = false;
+		// 사진이 담겨있는 배열의 인덱스 
 		var index = 0;
 		// 브라우저 height
 		var windowHeight = window.innerHeight;
@@ -72,7 +73,7 @@
 			}
 		}
 		photoAddEvent();
-		// removeEvent
+		// photoAddEvent함수 removeEvent
 		function photoRemoveEvent() {
 			for(var i=0; i<photoLink.length; i++){
 				// photoLink[i].style.cursor = "default";
@@ -82,9 +83,9 @@
 		// 사진 클릭시 커지는 함수 
 		function photoShow() {
 			console.log("photoShow함수실행");
-			var idx = photoLink.indexOf(this);
+			index = photoLink.indexOf(this);
 			for(var j=0; j<photoLink.length; j++){
-				if( j !== idx ) {
+				if( j !== index ) {
 					photoLink[j].classList.toggle("off");
 				}
 			}
@@ -114,12 +115,18 @@
 			removeMenuCover();
 			slideBtn.classList.remove("pause-interval");
 			slideBtn.classList.remove("on");
-			for(var j=0; j<photoLink.length; j++){
-				photoLink[j].removeEventListener("click", stopSlideShow, false);
-				photoLink[j].classList.remove("off");
-			}
 			index = 0;
 			chkBtn = !chkBtn;
+			for(var j=0; j<photoLink.length; j++){
+				photoLink[j].classList.remove("off");
+			}
+			removeStopSlideShow();
+		}
+		// stopSlideShow함수 removeEvent
+		function removeStopSlideShow(){
+			for(var j=0; j<photoLink.length; j++){
+				photoLink[j].removeEventListener("click", stopSlideShow, false);
+			}
 		}
 		// 슬라이드 쇼 함수
 		function slideShow() {
@@ -151,18 +158,20 @@
 		}
 		// 슬라이드 버튼 클릭시 
 		slideBtn.onclick = function(){
-			if(!chkBtn){
+			// 슬라이드 멈춤 버튼 클릭 여부 
+			var slideBtnOn = false;
+			// 슬라이드 플레이 
+			if(!chkBtn && !slideBtnOn){
 				slideShow();
 				photoRemoveEvent();
 				slideBtn.classList.remove("pause-interval");
 				slideBtn.classList.add("on");
-
 				chkBtn = !chkBtn;
-			}else{
+			}else{ // 슬라이드 멈춤 
 				clearInterval(global.slideInterval);
 				slideBtn.classList.remove("on");
 				slideBtn.classList.add("pause-interval");
-				chkBtn = !chkBtn;
+				slideBtnOn = !slideBtnOn;
 			}
 			
 		}
