@@ -36,6 +36,8 @@
 		var slideBtnIcon = document.querySelector(".slide-btn .fa");
 		// 슬라이드 버튼이 눌렸는지 확인하기 
 		var chkBtn = false;
+		// 슬라이드 멈춤 버튼 클릭 여부 
+		var slideBtnOn = false;
 		// 사진 확대 눌렀는지 확인하기 
 		var photoClick = false;
 		// 사진이 담겨있는 배열의 인덱스 
@@ -68,7 +70,6 @@
 		// 각 사진 클릭시 photoShow 함수 실행 
 		function photoAddEvent() {
 			for(var i=0; i<photoLink.length; i++){
-				// photoLink[i].style.cursor = "pointer";
 				photoLink[i].addEventListener("click", photoShow, false);
 			}
 		}
@@ -76,19 +77,21 @@
 		// photoAddEvent함수 removeEvent
 		function photoRemoveEvent() {
 			for(var i=0; i<photoLink.length; i++){
-				// photoLink[i].style.cursor = "default";
 				photoLink[i].removeEventListener("click", photoShow, false);
 			}
 		}
 		// 사진 클릭시 커지는 함수 
 		function photoShow() {
 			console.log("photoShow함수실행");
+			// 현재 사진 
 			index = photoLink.indexOf(this);
+			// 현재 사진 제외하고 안보이게 처리 
 			for(var j=0; j<photoLink.length; j++){
 				if( j !== index ) {
 					photoLink[j].classList.toggle("off");
 				}
 			}
+			// 현재 사진 확대 
 			this.classList.toggle("on");
 			if(!photoClick){
 				menuCover(this);
@@ -96,15 +99,19 @@
 				// 	this.firstElementChild.style.width = '65%';
 				// }
 				photoClick = !photoClick;
+				console.log('사진 클릭');
 			}else{
 				removeMenuCover();
 				photoClick = !photoClick;
+				index = 0;
+				console.log('사진 클릭해제');
 			}
 			
 		}
 		// 슬라이드 쇼를 멈추고 사진들이 원래대로 돌아오게 하는 함수 
 		function stopSlideShow(e){
 			console.log("stopSlideShow함수실행");
+			// 슬라이드 버튼이 눌러졌다면 
 			if(chkBtn){
 				photoLink[index].classList.remove("on");
 			}else{
@@ -115,11 +122,13 @@
 			removeMenuCover();
 			slideBtn.classList.remove("pause-interval");
 			slideBtn.classList.remove("on");
-			index = 0;
-			chkBtn = !chkBtn;
 			for(var j=0; j<photoLink.length; j++){
 				photoLink[j].classList.remove("off");
 			}
+			index = 0;
+			chkBtn = false;
+			slideBtnOn = false;
+			photoClick = false;
 			removeStopSlideShow();
 		}
 		// stopSlideShow함수 removeEvent
@@ -139,7 +148,7 @@
 			}
 			photoLink[index].classList.add("on");
 			menuCover(photoLink[index]);
-			
+			// photoClick = !photoClick;
 			global.slideInterval = setInterval(function(){
 				index++;
 				if(index < photoLink.length){
@@ -149,29 +158,31 @@
 					photoLink[index].classList.add("on");
 					menuCover(photoLink[index]);
 					console.log(index);
-				}else {
+				}else { // 슬라이드 쇼 끝난 후 
 					chkBtn = false;
+					slideBtnOn = false;
+					photoClick = false;
 					stopSlideShow();
 				}
-				
 			}, 2000);
 		}
 		// 슬라이드 버튼 클릭시 
 		slideBtn.onclick = function(){
-			// 슬라이드 멈춤 버튼 클릭 여부 
-			var slideBtnOn = false;
 			// 슬라이드 플레이 
 			if(!chkBtn && !slideBtnOn){
 				slideShow();
 				photoRemoveEvent();
 				slideBtn.classList.remove("pause-interval");
 				slideBtn.classList.add("on");
-				chkBtn = !chkBtn;
+				chkBtn = true;
+				slideBtnOn = true;
 			}else{ // 슬라이드 멈춤 
 				clearInterval(global.slideInterval);
 				slideBtn.classList.remove("on");
 				slideBtn.classList.add("pause-interval");
-				slideBtnOn = !slideBtnOn;
+				chkBtn = true;
+				slideBtnOn = false;
+				// photoClick = false;
 			}
 			
 		}
