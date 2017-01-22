@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<title>Module Patton</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<script>
+// 하나의 기능 컨트롤러 
+var budgetController = (function(){
+	// x, add는 private. 
+	// 클로저 내부에 있고 publicFun메소드를 통해서만 엑세스가 가능하기 때문이다. 
+	var x = 20;
+	var add = function(a){
+		return x + a;
+	}
+	// 필요한 것만 공개한다. 
+	return {
+		
+		// 항상 x와 add에 엑세스하므로 클로저(closure)가 생성된다.
+		// publicFun메소드는 return되어 사용할 수 있으므로 public.
+		publicTest: function(b){
+			return add(b);
+		}
+	}
+})();
+
+// UI에 관한 컨트롤러 
+var UIController = (function(){
+	// code
+})();
+
+var controller = (function(budgetCtrl, UICtrl){
+	var z = budgetCtrl.publicTest(5);
+
+	return{
+		anotherPublic: function(){
+			console.log(z);
+		}
+	}
+})(budgetController, UIController);
+</script>
+</body>
