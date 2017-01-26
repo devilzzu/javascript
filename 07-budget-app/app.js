@@ -7,27 +7,25 @@ var budgetController = (function() {
 
 // UI를 다루는 모듈 
 var UIController = (function() {
-
-  // controller에서 쓸 메소드이므로 public으로 공개한다. 
-  // return {
-  //   // 세 값을 모두 return 해야하는데, 아래처럼 메소드내에서 변수 선언을 한 것보다는,
-  //   // 객체의 프로퍼티로 지정하여 객체 하나만 불러오는 방법이 더 좋다. 
-  //   getInput: function() {
-  //     // 로직은 항상 같다. 1. select something 2. do something with the selection
-  //     // select요소에서 +, - option을 선택할 때. 기존에 적은 income, expense가 들어간다.
-  //     var type = document.querySelector('.add__type').value;
-  //     var description = document.querySelector('.add__description').value;
-  //     var value = document.querySelector('.add__value').value;
-  //   }
-  // }
+  // DOM선택은 모두 여기서 관리하도록 한다. 
+  var DOMstrings = {
+    inputType: '.add__type',
+    inputDescription: '.add__description',
+    inputValue: '.add__value',
+    inputBtn: '.add__btn'
+  };
 
   return {
     getInput: function() {
       return {
-        type: document.querySelector('.add__type').value,
-        description: document.querySelector('.add__description').value,
-        value: document.querySelector('.add__value').value
+        type: document.querySelector(DOMstrings.inputType).value,
+        description: document.querySelector(DOMstrings.inputDescription).value,
+        value: document.querySelector(DOMstrings.inputValue).value
       };
+    },
+    // DOMstrings 프로퍼티를 다른 모듈에서 사용가능하도록 
+    getDOMstrings: function() {
+      return DOMstrings;
     }
   }
 
@@ -35,6 +33,8 @@ var UIController = (function() {
 
 // data와 UI를 같이 다루는 모듈 (Global App)
 var controller = (function(budgetCtrl, UICtrl) {
+
+  var DOM = UICtrl.getDOMstrings();
 
   var ctrlAddItem = function() {
     // 버튼을 클릭했을 때나 Enter키를 눌렀을 때 to-do list 
@@ -47,7 +47,7 @@ var controller = (function(budgetCtrl, UICtrl) {
     // 5. 계산된 것을 상단 UI에 보이게 하기
   }
 
-  var budgetBtn = document.querySelector('.add__btn');
+  var budgetBtn = document.querySelector(DOM.inputBtn);
 
   budgetBtn.addEventListener('click', ctrlAddItem);
 

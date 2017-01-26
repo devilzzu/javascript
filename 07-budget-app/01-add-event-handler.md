@@ -74,3 +74,38 @@ return {
   }
 }
 ```
+
+##### 여기서 고민! querySelector('.classname')으로 설정하였는데, 나중에 UI가 변하거나 classname이 바뀐다면?
+
+한 객체에 프로퍼티 값으로 저장하여 사용하면 유지보수에 좋겠다! 
+
+DOM은 UI에 관련된 것이므로 UIController에서
+```
+// DOM선택은 모두 여기서 관리하도록 한다. 
+  var DOMstrings = {
+    inputType: '.add__type',
+    inputDescription: '.add__description',
+    inputValue: '.add__value',
+  };
+```
+
+그리고 기존의 `type: document.querySelector('.add__type').value`를 
+`type: document.querySelector(DOMstrings.inputType).value` 이렇게 관리하면 유지보수에 좋겠군!
+
+그리고 controller에서도 DOM이 필요하다. 관리는 UIController에서 한다면, 
+```
+return {
+  // DOMstrings 프로퍼티를 다른 모듈에서 사용가능하도록 
+  getDOMstrings: function() {
+    return DOMstrings;
+  }
+}
+```
+
+controller에서 위에서 공개한 것을 변수에 넣고, 필요한 부분에서 객체.프로퍼티로 불러들인다. 
+물론 DOMstrings객체에 inputBtn 프로퍼티를 추가하였다. 
+```
+var DOM = UICtrl.getDOMstrings();
+
+document.querySelector(DOM.inputBtn);
+```
