@@ -1,7 +1,32 @@
 // data를 다루는 모듈
 var budgetController = (function() {
 
+  // 생성자 함수 만들기 
+  // 생성자함수는 대문자로 시작하도록한다. 
+  var Income = function(id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+  };
 
+  var Expense = function(id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+  }; 
+
+  // Data를 관리하는 객체
+  var data = {
+    // 많은 수입, 지출이 들어온다면, 데이터구조는 배열이 좋겠다. 
+    allItems: {
+      inc: [],
+      exp: [];
+    }, 
+    totals: {
+      inc: 0,
+      exp: 0
+    }
+  };
 
 })();
 
