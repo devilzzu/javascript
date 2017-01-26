@@ -27,14 +27,26 @@ var UIController = (function() {
     getDOMstrings: function() {
       return DOMstrings;
     }
-  }
+  };
 
 })();
 
 // data와 UI를 같이 다루는 모듈 (Global App)
 var controller = (function(budgetCtrl, UICtrl) {
 
-  var DOM = UICtrl.getDOMstrings();
+  // 이벤트 리스너에 관련한 것들을 묶어준다. 
+  var setupEventListeners = function() {
+    var DOM = UICtrl.getDOMstrings();
+
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+
+    // keydown이벤트는 특정 요소에 발생되는 것이 아니라 global document에서 발생한다.
+    document.addEventListener('keypress', function(evt) {
+      if (evt.keyCode === 13) {
+        ctrlAddItem();
+      }
+    }); 
+  };
 
   var ctrlAddItem = function() {
     // 버튼을 클릭했을 때나 Enter키를 눌렀을 때 to-do list 
@@ -45,17 +57,14 @@ var controller = (function(budgetCtrl, UICtrl) {
     // 3. 아래 UI에 추가 
     // 4. 예산 계산 
     // 5. 계산된 것을 상단 UI에 보이게 하기
-  }
+  };
 
-  var budgetBtn = document.querySelector(DOM.inputBtn);
-
-  budgetBtn.addEventListener('click', ctrlAddItem);
-
-  // keydown이벤트는 특정 요소에 발생되는 것이 아니라 global document에서 발생한다.
-  document.addEventListener('keypress', function(evt) {
-    if (evt.keyCode === 13) {
-      ctrlAddItem();
+  return {
+    init: function() {
+      setupEventListeners();
     }
-  }); 
+  };
 
 })(budgetController, UIController);
+
+controller.init();
