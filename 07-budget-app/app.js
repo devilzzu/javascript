@@ -19,14 +19,33 @@ var budgetController = (function() {
   var data = {
     // 많은 수입, 지출이 들어온다면, 데이터구조는 배열이 좋겠다. 
     allItems: {
-      inc: [],
-      exp: [];
+      income: [],
+      expense: [];
     }, 
     totals: {
-      inc: 0,
-      exp: 0
+      income: 0,
+      expense: 0
     }
   };
+
+  return {
+    // 수입, 지출이 추가될 때 실행되는 함수로, 실행될때마다 인스턴스를 만든다. 
+    addItem: function(type, des, val) {
+      var newItem, ID;
+      // new ID 생성. ID는 유일한 숫자여야 하는데, item 삭제도 이뤄질 것이기 때문에 id이 마지막 숫자 + 1이 되어야 한다. 
+      ID = data.allItems[type][data.allItems[type].length -1].id + 1;
+      // new item 생성.
+      if(type === 'income') {
+        newItem = new Income(id, des, val);
+      } else if(type === 'expense') {
+        newItem = new Expense(id, des, val);
+      }
+      // data객체의 배열에 추가시키자. 
+      data.allItems[type].push(newItem);
+      // 새 요소를 리턴한다. 
+      return newItem;
+    }
+  }
 
 })();
 
@@ -43,6 +62,7 @@ var UIController = (function() {
   return {
     getInput: function() {
       return {
+        // select되는 value = 'income', 'expense'
         type: document.querySelector(DOMstrings.inputType).value,
         description: document.querySelector(DOMstrings.inputDescription).value,
         value: document.querySelector(DOMstrings.inputValue).value
@@ -79,6 +99,7 @@ var controller = (function(budgetCtrl, UICtrl) {
     var input = UICtrl.getInput();
     console.log(input);
     // 2. budgetController에 data추가 
+    budgetCtrl.addItem(input.type, input.description, input.value);
     // 3. 아래 UI에 추가 
     // 4. 예산 계산 
     // 5. 계산된 것을 상단 UI에 보이게 하기
