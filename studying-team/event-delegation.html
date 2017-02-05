@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<title>이벤트 위임</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<ul class="menu">
+		<li><a href="#">menu1</a></li>
+		<li><a href="#">menu2</a></li>
+		<li><a href="#">menu3</a></li>
+		<li><a href="#">menu4</a></li>
+	</ul>
+</body>
+<script>
+	var beforeTarget = false;
+
+	document.querySelector(".menu").addEventListener("click", function(e){
+		if (beforeTarget) {
+			e.target.style.background = "#ff0";
+			beforeTarget.style.background = "none";
+			beforeTarget = e.target;
+		} else {
+			e.target.style.background = "#ff0";
+			beforeTarget = e.target;
+		}
+	});
+
+</script>
+</html>
