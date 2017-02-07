@@ -18,13 +18,17 @@
 	var beforeTarget = false;
 
 	document.querySelector(".menu").addEventListener("click", function(e){
-		if (beforeTarget) {
-			e.target.style.background = "#ff0";
-			beforeTarget.style.background = "none";
-			beforeTarget = e.target;
-		} else {
-			e.target.style.background = "#ff0";
-			beforeTarget = e.target;
+		console.log(e);
+		// console.log(e.target.nodeName)
+		if (e.target.nodeName == 'A') {
+			if (beforeTarget) {
+				e.target.style.background = "#ff0";
+				beforeTarget.style.background = "none";
+				beforeTarget = e.target;
+			} else {
+				e.target.style.background = "#ff0";
+				beforeTarget = e.target;
+			}
 		}
 	});
 
