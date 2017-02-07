@@ -22,8 +22,9 @@ var Athlete = function(name, yearofBirth, job, olympics, medals) {
 	this.medals = medals;
 }
 // 상속 구현
-Athlete.prototype = Object.create(Person.prototype);
-// Athlete.prototype = new Person;
+// Athlete.prototype = Object.create(Person.prototype);
+Athlete.prototype = new Person;
+Athlete.prototype.constructor = Athlete;
 // 인스턴스 
 var johnAthlete = new Athlete('John', 1980, 'swimmer', 3, 10);
 // 메소드
