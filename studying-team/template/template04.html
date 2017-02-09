@@ -36,7 +36,15 @@
 	];
 
 	var template = document.querySelector('#myTemplate').innerText;
-	var resultHTML = template.replace('{{name}}', dataFromServer[3].name);
+	var resultHTML = '';
+
+	// for(var i = 0; i < dataFromServer.length; i++) {
+	// 	resultHTML += template.replace('{{name}}', dataFromServer[i].name);
+	// }
+	dataFromServer.forEach(function(i){
+		resultHTML += template.replace('{{name}}', i.name);
+	});
+
 
 	var baseElement = document.querySelector('.showdata > ul');
 	baseElement.innerHTML = resultHTML;
